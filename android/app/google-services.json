@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "733181429594",
+    "project_id": "extremetechapp",
+    "storage_bucket": "extremetechapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733181429594:android:70932ea810773570881563",
+        "android_client_info": {
+          "package_name": "com.extremetech.appmovil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733181429594-jqrptgu1atj08ae9t3m7qr5io9sm0efs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.extremetech.appmovil",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "733181429594-ougfgqkj5067blaaef6urru6u1kqbnpc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDj040o9PCbzSM_teRy5gVcKAP6wtx8SM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733181429594-ougfgqkj5067blaaef6urru6u1kqbnpc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "733181429594-m9sgsa1ghgh7cnhmc2atslteohkpon8g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.extremetech.appmovil"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
