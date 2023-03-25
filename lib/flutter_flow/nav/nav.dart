@@ -96,6 +96,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Registro',
           path: '/registro',
           builder: (context, params) => RegistroWidget(),
+        ),
+        FFRoute(
+          name: 'ResetPassword',
+          path: '/resetPassword',
+          builder: (context, params) => ResetPasswordWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,

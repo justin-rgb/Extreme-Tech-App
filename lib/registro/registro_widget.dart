@@ -1,8 +1,12 @@
+import '/auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/components/aviso_registro_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'registro_model.dart';
@@ -219,6 +223,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                               FlutterFlowTheme.of(context).secondaryColor,
                         ),
                         style: FlutterFlowTheme.of(context).bodyText1,
+                        keyboardType: TextInputType.emailAddress,
                         validator: _model.txtCorreoRegControllerValidator
                             .asValidator(context),
                       ),
@@ -303,12 +308,50 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
                       child: FFButtonWidget(
-                        onPressed: () {
-                          print('btnRegistrarse pressed ...');
+                        onPressed: () async {
+                          GoRouter.of(context).prepareAuthEvent();
+
+                          final user = await createAccountWithEmail(
+                            context,
+                            _model.txtCorreoRegController.text,
+                            _model.txtPasswordRegController.text,
+                          );
+                          if (user == null) {
+                            return;
+                          }
+
+                          final usersCreateData = createUsersRecordData(
+                            email: _model.txtCorreoRegController.text,
+                            displayName: _model.txtNombreRegController.text,
+                            phoneNumber: _model.txtNumeroTelRegController.text,
+                          );
+                          await UsersRecord.collection
+                              .doc(user.uid)
+                              .update(usersCreateData);
+
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            enableDrag: false,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.of(context).viewInsets,
+                                child: Container(
+                                  height: 250.0,
+                                  child: AvisoRegistroWidget(),
+                                ),
+                              );
+                            },
+                          ).then((value) => setState(() {}));
+
+                          context.goNamedAuth('Home', mounted);
                         },
                         text: 'Registrarse',
+                        icon: FaIcon(
+                          FontAwesomeIcons.solidSave,
+                        ),
                         options: FFButtonOptions(
-                          width: 130.0,
+                          width: 160.0,
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
@@ -367,8 +410,8 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          10.0, 10.0, 10.0, 10.0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           context.pushNamed(
@@ -383,8 +426,12 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                           );
                         },
                         text: 'Iniciar Sesión',
+                        icon: Icon(
+                          Icons.login_sharp,
+                          size: 15.0,
+                        ),
                         options: FFButtonOptions(
-                          width: 130.0,
+                          width: 145.0,
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),

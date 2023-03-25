@@ -1,5 +1,4 @@
 import '/auth/auth_util.dart';
-import '/components/aviso_registro_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -55,10 +54,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Image.network(
-                      'https://picsum.photos/seed/743/600',
+                    Image.asset(
+                      'assets/images/ExtremeTech.png',
                       width: MediaQuery.of(context).size.width * 1.0,
-                      height: 100.0,
+                      height: 143.5,
                       fit: BoxFit.cover,
                     ),
                   ],
@@ -191,14 +190,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text(
-                      '¿Has olvidado tu contraseña?',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Poppins',
-                            color: FlutterFlowTheme.of(context).primaryBtnText,
-                            fontSize: 10.0,
-                            decoration: TextDecoration.underline,
-                          ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(18.0, 8.0, 0.0, 0.0),
+                      child: Text(
+                        '¿Has olvidado tu contraseña?',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              color:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                              fontSize: 14.0,
+                              decoration: TextDecoration.underline,
+                            ),
+                      ),
                     ),
                   ],
                 ),
@@ -228,8 +232,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                           context.goNamedAuth('Home', mounted);
                         },
                         text: 'Iniciar Sesion',
+                        icon: Icon(
+                          Icons.login_sharp,
+                          size: 15.0,
+                        ),
                         options: FFButtonOptions(
-                          width: 130.0,
+                          width: 140.0,
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
@@ -254,35 +262,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                           EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          GoRouter.of(context).prepareAuthEvent();
-
-                          final user = await createAccountWithEmail(
-                            context,
-                            _model.txtUsuarioController.text,
-                            _model.txtContrasenaController.text,
-                          );
-                          if (user == null) {
-                            return;
-                          }
-
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            enableDrag: false,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child: AvisoRegistroWidget(),
-                              );
-                            },
-                          ).then((value) => setState(() {}));
-
-                          context.goNamedAuth('Home', mounted);
+                          context.pushNamed('Registro');
                         },
                         text: 'Registrarse',
+                        icon: Icon(
+                          Icons.assignment_return_outlined,
+                          size: 15.0,
+                        ),
                         options: FFButtonOptions(
-                          width: 130.0,
+                          width: 140.0,
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
