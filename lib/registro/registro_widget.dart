@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/aviso_registro_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -46,12 +46,12 @@ class _RegistroWidgetState extends State<RegistroWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -83,7 +83,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Nombre completo...',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                            hintStyle: FlutterFlowTheme.of(context).bodySmall,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
@@ -115,7 +115,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                             filled: true,
                             fillColor: Colors.white,
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
+                          style: FlutterFlowTheme.of(context).bodyMedium,
                           validator: _model.txtNombreRegControllerValidator
                               .asValidator(context),
                         ),
@@ -136,7 +136,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Número de Teléfono...',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
@@ -166,10 +166,9 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           filled: true,
-                          fillColor:
-                              FlutterFlowTheme.of(context).secondaryColor,
+                          fillColor: FlutterFlowTheme.of(context).secondary,
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         validator: _model.txtNumeroTelRegControllerValidator
                             .asValidator(context),
                       ),
@@ -189,7 +188,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Correo electrónico...',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
@@ -219,10 +218,9 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           filled: true,
-                          fillColor:
-                              FlutterFlowTheme.of(context).secondaryColor,
+                          fillColor: FlutterFlowTheme.of(context).secondary,
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         keyboardType: TextInputType.emailAddress,
                         validator: _model.txtCorreoRegControllerValidator
                             .asValidator(context),
@@ -243,7 +241,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                         obscureText: !_model.txtPasswordRegVisibility,
                         decoration: InputDecoration(
                           hintText: 'Contraseña...',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
@@ -273,8 +271,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           filled: true,
-                          fillColor:
-                              FlutterFlowTheme.of(context).secondaryColor,
+                          fillColor: FlutterFlowTheme.of(context).secondary,
                           suffixIcon: InkWell(
                             onTap: () => setState(
                               () => _model.txtPasswordRegVisibility =
@@ -290,7 +287,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                             ),
                           ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         validator: _model.txtPasswordRegControllerValidator
                             .asValidator(context),
                       ),
@@ -311,7 +308,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                         onPressed: () async {
                           GoRouter.of(context).prepareAuthEvent();
 
-                          final user = await createAccountWithEmail(
+                          final user = await authManager.createAccountWithEmail(
                             context,
                             _model.txtCorreoRegController.text,
                             _model.txtPasswordRegController.text,
@@ -331,14 +328,20 @@ class _RegistroWidgetState extends State<RegistroWidget> {
 
                           await showModalBottomSheet(
                             isScrollControlled: true,
+                            backgroundColor: Colors.white,
                             enableDrag: false,
                             context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child: Container(
-                                  height: 250.0,
-                                  child: AvisoRegistroWidget(),
+                            builder: (bottomSheetContext) {
+                              return GestureDetector(
+                                onTap: () => FocusScope.of(context)
+                                    .requestFocus(_unfocusNode),
+                                child: Padding(
+                                  padding: MediaQuery.of(bottomSheetContext)
+                                      .viewInsets,
+                                  child: Container(
+                                    height: 250.0,
+                                    child: AvisoRegistroWidget(),
+                                  ),
                                 ),
                               );
                             },
@@ -351,18 +354,20 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                           FontAwesomeIcons.solidSave,
                         ),
                         options: FFButtonOptions(
-                          width: 160.0,
+                          width: 180.0,
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                           textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
+                              FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
+                                    fontSize: 16.0,
                                   ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
@@ -390,7 +395,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                           '¿Ya tienes cuenta?',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Poppins',
                                 color:
@@ -415,7 +420,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                       child: FFButtonWidget(
                         onPressed: () async {
                           context.pushNamed(
-                            'login',
+                            'Login',
                             extra: <String, dynamic>{
                               kTransitionInfoKey: TransitionInfo(
                                 hasTransition: true,
@@ -431,18 +436,19 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                           size: 15.0,
                         ),
                         options: FFButtonOptions(
-                          width: 145.0,
+                          width: 160.0,
                           height: 40.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                           textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
+                              FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
                                   ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,

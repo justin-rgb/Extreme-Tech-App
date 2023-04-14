@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -9,7 +9,13 @@ import 'login_model.dart';
 export 'login_model.dart';
 
 class LoginWidget extends StatefulWidget {
-  const LoginWidget({Key? key}) : super(key: key);
+  const LoginWidget({
+    Key? key,
+    bool? enviadoCorreo,
+  })  : this.enviadoCorreo = enviadoCorreo ?? false,
+        super(key: key);
+
+  final bool enviadoCorreo;
 
   @override
   _LoginWidgetState createState() => _LoginWidgetState();
@@ -40,12 +46,12 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -77,7 +83,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Usuario...',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                            hintStyle: FlutterFlowTheme.of(context).bodySmall,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0x00000000),
@@ -109,7 +115,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             filled: true,
                             fillColor: Colors.white,
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
+                          style: FlutterFlowTheme.of(context).bodyMedium,
                           validator: _model.txtUsuarioControllerValidator
                               .asValidator(context),
                         ),
@@ -130,7 +136,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         obscureText: !_model.txtContrasenaVisibility,
                         decoration: InputDecoration(
                           hintText: 'Contraseña...',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
@@ -160,8 +166,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           filled: true,
-                          fillColor:
-                              FlutterFlowTheme.of(context).secondaryColor,
+                          fillColor: FlutterFlowTheme.of(context).secondary,
                           suffixIcon: InkWell(
                             onTap: () => setState(
                               () => _model.txtContrasenaVisibility =
@@ -177,7 +182,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         validator: _model.txtContrasenaControllerValidator
                             .asValidator(context),
                       ),
@@ -193,15 +198,22 @@ class _LoginWidgetState extends State<LoginWidget> {
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(18.0, 8.0, 0.0, 0.0),
-                      child: Text(
-                        '¿Has olvidado tu contraseña?',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              fontSize: 14.0,
-                              decoration: TextDecoration.underline,
-                            ),
+                      child: InkWell(
+                        onTap: () async {
+                          context.pushNamed('ResetPassword');
+                        },
+                        child: Text(
+                          '¿Has olvidado tu contraseña?',
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Poppins',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                fontSize: 14.0,
+                                decoration: TextDecoration.underline,
+                              ),
+                        ),
                       ),
                     ),
                   ],
@@ -220,7 +232,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         onPressed: () async {
                           GoRouter.of(context).prepareAuthEvent();
 
-                          final user = await signInWithEmail(
+                          final user = await authManager.signInWithEmail(
                             context,
                             _model.txtUsuarioController.text,
                             _model.txtContrasenaController.text,
@@ -243,12 +255,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                           textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
+                              FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
                                   ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
@@ -276,12 +289,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                           textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
+                              FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
                                   ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,

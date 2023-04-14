@@ -4,18 +4,20 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'aviso_registro_model.dart';
-export 'aviso_registro_model.dart';
+import 'enviado_mensaje_correo_model.dart';
+export 'enviado_mensaje_correo_model.dart';
 
-class AvisoRegistroWidget extends StatefulWidget {
-  const AvisoRegistroWidget({Key? key}) : super(key: key);
+class EnviadoMensajeCorreoWidget extends StatefulWidget {
+  const EnviadoMensajeCorreoWidget({Key? key}) : super(key: key);
 
   @override
-  _AvisoRegistroWidgetState createState() => _AvisoRegistroWidgetState();
+  _EnviadoMensajeCorreoWidgetState createState() =>
+      _EnviadoMensajeCorreoWidgetState();
 }
 
-class _AvisoRegistroWidgetState extends State<AvisoRegistroWidget> {
-  late AvisoRegistroModel _model;
+class _EnviadoMensajeCorreoWidgetState
+    extends State<EnviadoMensajeCorreoWidget> {
+  late EnviadoMensajeCorreoModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -26,7 +28,7 @@ class _AvisoRegistroWidgetState extends State<AvisoRegistroWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AvisoRegistroModel());
+    _model = createModel(context, () => EnviadoMensajeCorreoModel());
   }
 
   @override
@@ -81,7 +83,7 @@ class _AvisoRegistroWidgetState extends State<AvisoRegistroWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 16.0),
                           child: Icon(
-                            Icons.phone_iphone_outlined,
+                            Icons.security,
                             color: Color(0xFF57636C),
                             size: 44.0,
                           ),
@@ -90,7 +92,7 @@ class _AvisoRegistroWidgetState extends State<AvisoRegistroWidget> {
                       Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: Text(
-                          'Se ha registrado exitosamente',
+                          'Se ha enviado el correo para reestablecimiento de contraseña',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context)
                               .headlineMedium
@@ -107,14 +109,14 @@ class _AvisoRegistroWidgetState extends State<AvisoRegistroWidget> {
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 25.0, 30.0, 12.0),
+                      EdgeInsetsDirectional.fromSTEB(24.0, 15.0, 30.0, 12.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       FFButtonWidget(
                         onPressed: () async {
-                          context.pushNamed('Home');
+                          Navigator.pop(context);
                         },
                         text: 'Aceptar',
                         options: FFButtonOptions(

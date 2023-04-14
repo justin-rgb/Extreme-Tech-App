@@ -7,7 +7,18 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(AccesorioRecord.serializer)
+      ..add(CategoriaAccesorioRecord.serializer)
+      ..add(CategoriaCelularRecord.serializer)
+      ..add(CategoriaComponenteRecord.serializer)
+      ..add(CategoriaComputadoraRecord.serializer)
+      ..add(CategoriaPerifericoRecord.serializer)
       ..add(CategoriaRecord.serializer)
+      ..add(CelularRecord.serializer)
+      ..add(ComponenteRecord.serializer)
+      ..add(ComputadoraRecord.serializer)
+      ..add(MarcaRecord.serializer)
+      ..add(PerifericoRecord.serializer)
       ..add(ProductosRecord.serializer)
       ..add(UsersRecord.serializer))
     .build();

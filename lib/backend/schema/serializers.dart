@@ -4,6 +4,17 @@ import 'package:from_css_color/from_css_color.dart';
 import 'users_record.dart';
 import 'productos_record.dart';
 import 'categoria_record.dart';
+import 'marca_record.dart';
+import 'computadora_record.dart';
+import 'categoria_computadora_record.dart';
+import 'categoria_componente_record.dart';
+import 'componente_record.dart';
+import 'categoria_periferico_record.dart';
+import 'periferico_record.dart';
+import 'categoria_accesorio_record.dart';
+import 'accesorio_record.dart';
+import 'categoria_celular_record.dart';
+import 'celular_record.dart';
 
 import 'index.dart';
 
@@ -17,6 +28,17 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   UsersRecord,
   ProductosRecord,
   CategoriaRecord,
+  MarcaRecord,
+  ComputadoraRecord,
+  CategoriaComputadoraRecord,
+  CategoriaComponenteRecord,
+  ComponenteRecord,
+  CategoriaPerifericoRecord,
+  PerifericoRecord,
+  CategoriaAccesorioRecord,
+  AccesorioRecord,
+  CategoriaCelularRecord,
+  CelularRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())
@@ -201,6 +223,9 @@ Map<String, dynamic> mapToFirestore(Map<String, dynamic> data) =>
       }
       return MapEntry(key, value);
     });
+
+List<GeoPoint>? convertToGeoPointList(List<LatLng>? list) =>
+    list?.map((e) => e.toGeoPoint()).toList();
 
 extension GeoPointExtension on LatLng {
   GeoPoint toGeoPoint() => GeoPoint(latitude, longitude);

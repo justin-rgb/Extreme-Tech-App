@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/components/enviado_mensaje_correo_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -26,7 +28,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
     super.initState();
     _model = createModel(context, () => ResetPasswordModel());
 
-    _model.txtCorreoRegController ??= TextEditingController();
+    _model.txtOlvidarCorreoController ??= TextEditingController();
   }
 
   @override
@@ -39,12 +41,21 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          iconTheme:
+              IconThemeData(color: FlutterFlowTheme.of(context).secondary),
+          automaticallyImplyLeading: true,
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
+        ),
+        body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -60,7 +71,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                       child: Image.asset(
                         'assets/images/extremetechcr-logo.png',
                         width: MediaQuery.of(context).size.width * 1.0,
-                        height: 228.4,
+                        height: 196.5,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -70,7 +81,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
               Align(
                 alignment: AlignmentDirectional(0.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -79,11 +90,11 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                       AutoSizeText(
                         'Coloque el correo al que quisiera le llegará la \ninformación para reestablecer la contraseña',
                         textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Poppins',
                               color:
                                   FlutterFlowTheme.of(context).primaryBtnText,
-                              fontSize: 14.0,
+                              fontSize: 15.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -99,11 +110,12 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        controller: _model.txtCorreoRegController,
+                        controller: _model.txtOlvidarCorreoController,
+                        autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Correo electrónico...',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
@@ -133,11 +145,11 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           filled: true,
-                          fillColor:
-                              FlutterFlowTheme.of(context).secondaryColor,
+                          fillColor: FlutterFlowTheme.of(context).secondary,
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                        validator: _model.txtCorreoRegControllerValidator
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: _model.txtOlvidarCorreoControllerValidator
                             .asValidator(context),
                       ),
                     ),
@@ -155,16 +167,66 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                           10.0, 10.0, 10.0, 10.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          context.pushNamed(
-                            'login',
-                            extra: <String, dynamic>{
-                              kTransitionInfoKey: TransitionInfo(
-                                hasTransition: true,
-                                transitionType: PageTransitionType.bottomToTop,
-                                duration: Duration(milliseconds: 1),
-                              ),
-                            },
-                          );
+                          if (_model.txtOlvidarCorreoController.text != null &&
+                              _model.txtOlvidarCorreoController.text != '') {
+                            if (_model
+                                .txtOlvidarCorreoController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Email required!',
+                                  ),
+                                ),
+                              );
+                              return;
+                            }
+                            await authManager.resetPassword(
+                              email: _model.txtOlvidarCorreoController.text,
+                              context: context,
+                            );
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              enableDrag: false,
+                              context: context,
+                              builder: (bottomSheetContext) {
+                                return GestureDetector(
+                                  onTap: () => FocusScope.of(context)
+                                      .requestFocus(_unfocusNode),
+                                  child: Padding(
+                                    padding: MediaQuery.of(bottomSheetContext)
+                                        .viewInsets,
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.32,
+                                      child: EnviadoMensajeCorreoWidget(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ).then((value) => setState(() {}));
+
+                            context.pushNamed('Login');
+                          } else {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text('Correo vacio'),
+                                  content:
+                                      Text('Debe colocar un correo válido'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                         },
                         text: 'Enviar correo',
                         options: FFButtonOptions(
@@ -174,12 +236,13 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                           textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
+                              FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
                                   ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
