@@ -59,6 +59,7 @@ class _EnviadoMensajeCorreoWidgetState
               )
             ],
             borderRadius: BorderRadius.circular(24.0),
+            shape: BoxShape.rectangle,
             border: Border.all(
               color: Color(0xFFEFF7F5),
               width: 1.0,
@@ -92,7 +93,7 @@ class _EnviadoMensajeCorreoWidgetState
                       Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: Text(
-                          'Se ha enviado el correo para reestablecimiento de contraseña',
+                          'Se ha enviado un correo para reestablecimiento de contraseña',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context)
                               .headlineMedium

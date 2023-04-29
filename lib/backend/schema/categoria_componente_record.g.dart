@@ -32,6 +32,13 @@ class _$CategoriaComponenteRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.iMGComponente;
+    if (value != null) {
+      result
+        ..add('IMGComponente')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -59,6 +66,10 @@ class _$CategoriaComponenteRecordSerializer
           result.categoriaComponente = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'IMGComponente':
+          result.iMGComponente = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -76,13 +87,16 @@ class _$CategoriaComponenteRecord extends CategoriaComponenteRecord {
   @override
   final String? categoriaComponente;
   @override
+  final String? iMGComponente;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$CategoriaComponenteRecord(
           [void Function(CategoriaComponenteRecordBuilder)? updates]) =>
       (new CategoriaComponenteRecordBuilder()..update(updates))._build();
 
-  _$CategoriaComponenteRecord._({this.categoriaComponente, this.ffRef})
+  _$CategoriaComponenteRecord._(
+      {this.categoriaComponente, this.iMGComponente, this.ffRef})
       : super._();
 
   @override
@@ -99,6 +113,7 @@ class _$CategoriaComponenteRecord extends CategoriaComponenteRecord {
     if (identical(other, this)) return true;
     return other is CategoriaComponenteRecord &&
         categoriaComponente == other.categoriaComponente &&
+        iMGComponente == other.iMGComponente &&
         ffRef == other.ffRef;
   }
 
@@ -106,6 +121,7 @@ class _$CategoriaComponenteRecord extends CategoriaComponenteRecord {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, categoriaComponente.hashCode);
+    _$hash = $jc(_$hash, iMGComponente.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -115,6 +131,7 @@ class _$CategoriaComponenteRecord extends CategoriaComponenteRecord {
   String toString() {
     return (newBuiltValueToStringHelper(r'CategoriaComponenteRecord')
           ..add('categoriaComponente', categoriaComponente)
+          ..add('iMGComponente', iMGComponente)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -130,6 +147,11 @@ class CategoriaComponenteRecordBuilder
   set categoriaComponente(String? categoriaComponente) =>
       _$this._categoriaComponente = categoriaComponente;
 
+  String? _iMGComponente;
+  String? get iMGComponente => _$this._iMGComponente;
+  set iMGComponente(String? iMGComponente) =>
+      _$this._iMGComponente = iMGComponente;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -142,6 +164,7 @@ class CategoriaComponenteRecordBuilder
     final $v = _$v;
     if ($v != null) {
       _categoriaComponente = $v.categoriaComponente;
+      _iMGComponente = $v.iMGComponente;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -165,7 +188,9 @@ class CategoriaComponenteRecordBuilder
   _$CategoriaComponenteRecord _build() {
     final _$result = _$v ??
         new _$CategoriaComponenteRecord._(
-            categoriaComponente: categoriaComponente, ffRef: ffRef);
+            categoriaComponente: categoriaComponente,
+            iMGComponente: iMGComponente,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

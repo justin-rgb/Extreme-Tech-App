@@ -1,34 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'categoria_celular_record.dart';
+part of 'avatar_record.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<CategoriaCelularRecord> _$categoriaCelularRecordSerializer =
-    new _$CategoriaCelularRecordSerializer();
+Serializer<AvatarRecord> _$avatarRecordSerializer =
+    new _$AvatarRecordSerializer();
 
-class _$CategoriaCelularRecordSerializer
-    implements StructuredSerializer<CategoriaCelularRecord> {
+class _$AvatarRecordSerializer implements StructuredSerializer<AvatarRecord> {
   @override
-  final Iterable<Type> types = const [
-    CategoriaCelularRecord,
-    _$CategoriaCelularRecord
-  ];
+  final Iterable<Type> types = const [AvatarRecord, _$AvatarRecord];
   @override
-  final String wireName = 'CategoriaCelularRecord';
+  final String wireName = 'AvatarRecord';
 
   @override
-  Iterable<Object?> serialize(
-      Serializers serializers, CategoriaCelularRecord object,
+  Iterable<Object?> serialize(Serializers serializers, AvatarRecord object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
-    value = object.categoriaCelular;
+    value = object.avatar1;
     if (value != null) {
       result
-        ..add('CategoriaCelular')
+        ..add('avatar1')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -44,10 +39,10 @@ class _$CategoriaCelularRecordSerializer
   }
 
   @override
-  CategoriaCelularRecord deserialize(
+  AvatarRecord deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CategoriaCelularRecordBuilder();
+    final result = new AvatarRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -55,8 +50,8 @@ class _$CategoriaCelularRecordSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'CategoriaCelular':
-          result.categoriaCelular = serializers.deserialize(value,
+        case 'avatar1':
+          result.avatar1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'Document__Reference__Field':
@@ -72,39 +67,36 @@ class _$CategoriaCelularRecordSerializer
   }
 }
 
-class _$CategoriaCelularRecord extends CategoriaCelularRecord {
+class _$AvatarRecord extends AvatarRecord {
   @override
-  final String? categoriaCelular;
+  final String? avatar1;
   @override
   final DocumentReference<Object?>? ffRef;
 
-  factory _$CategoriaCelularRecord(
-          [void Function(CategoriaCelularRecordBuilder)? updates]) =>
-      (new CategoriaCelularRecordBuilder()..update(updates))._build();
+  factory _$AvatarRecord([void Function(AvatarRecordBuilder)? updates]) =>
+      (new AvatarRecordBuilder()..update(updates))._build();
 
-  _$CategoriaCelularRecord._({this.categoriaCelular, this.ffRef}) : super._();
+  _$AvatarRecord._({this.avatar1, this.ffRef}) : super._();
 
   @override
-  CategoriaCelularRecord rebuild(
-          void Function(CategoriaCelularRecordBuilder) updates) =>
+  AvatarRecord rebuild(void Function(AvatarRecordBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CategoriaCelularRecordBuilder toBuilder() =>
-      new CategoriaCelularRecordBuilder()..replace(this);
+  AvatarRecordBuilder toBuilder() => new AvatarRecordBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is CategoriaCelularRecord &&
-        categoriaCelular == other.categoriaCelular &&
+    return other is AvatarRecord &&
+        avatar1 == other.avatar1 &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, categoriaCelular.hashCode);
+    _$hash = $jc(_$hash, avatar1.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -112,34 +104,33 @@ class _$CategoriaCelularRecord extends CategoriaCelularRecord {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'CategoriaCelularRecord')
-          ..add('categoriaCelular', categoriaCelular)
+    return (newBuiltValueToStringHelper(r'AvatarRecord')
+          ..add('avatar1', avatar1)
           ..add('ffRef', ffRef))
         .toString();
   }
 }
 
-class CategoriaCelularRecordBuilder
-    implements Builder<CategoriaCelularRecord, CategoriaCelularRecordBuilder> {
-  _$CategoriaCelularRecord? _$v;
+class AvatarRecordBuilder
+    implements Builder<AvatarRecord, AvatarRecordBuilder> {
+  _$AvatarRecord? _$v;
 
-  String? _categoriaCelular;
-  String? get categoriaCelular => _$this._categoriaCelular;
-  set categoriaCelular(String? categoriaCelular) =>
-      _$this._categoriaCelular = categoriaCelular;
+  String? _avatar1;
+  String? get avatar1 => _$this._avatar1;
+  set avatar1(String? avatar1) => _$this._avatar1 = avatar1;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
 
-  CategoriaCelularRecordBuilder() {
-    CategoriaCelularRecord._initializeBuilder(this);
+  AvatarRecordBuilder() {
+    AvatarRecord._initializeBuilder(this);
   }
 
-  CategoriaCelularRecordBuilder get _$this {
+  AvatarRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _categoriaCelular = $v.categoriaCelular;
+      _avatar1 = $v.avatar1;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -147,23 +138,22 @@ class CategoriaCelularRecordBuilder
   }
 
   @override
-  void replace(CategoriaCelularRecord other) {
+  void replace(AvatarRecord other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$CategoriaCelularRecord;
+    _$v = other as _$AvatarRecord;
   }
 
   @override
-  void update(void Function(CategoriaCelularRecordBuilder)? updates) {
+  void update(void Function(AvatarRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  CategoriaCelularRecord build() => _build();
+  AvatarRecord build() => _build();
 
-  _$CategoriaCelularRecord _build() {
-    final _$result = _$v ??
-        new _$CategoriaCelularRecord._(
-            categoriaCelular: categoriaCelular, ffRef: ffRef);
+  _$AvatarRecord _build() {
+    final _$result =
+        _$v ?? new _$AvatarRecord._(avatar1: avatar1, ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

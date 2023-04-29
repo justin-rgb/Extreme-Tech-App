@@ -2,19 +2,11 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:from_css_color/from_css_color.dart';
 
 import 'users_record.dart';
-import 'productos_record.dart';
-import 'categoria_record.dart';
 import 'marca_record.dart';
-import 'computadora_record.dart';
-import 'categoria_computadora_record.dart';
 import 'categoria_componente_record.dart';
 import 'componente_record.dart';
-import 'categoria_periferico_record.dart';
-import 'periferico_record.dart';
-import 'categoria_accesorio_record.dart';
-import 'accesorio_record.dart';
-import 'categoria_celular_record.dart';
-import 'celular_record.dart';
+import 'avatar_record.dart';
+import 'carrito_record.dart';
 
 import 'index.dart';
 
@@ -26,19 +18,11 @@ const kDocumentReferenceField = 'Document__Reference__Field';
 
 @SerializersFor(const [
   UsersRecord,
-  ProductosRecord,
-  CategoriaRecord,
   MarcaRecord,
-  ComputadoraRecord,
-  CategoriaComputadoraRecord,
   CategoriaComponenteRecord,
   ComponenteRecord,
-  CategoriaPerifericoRecord,
-  PerifericoRecord,
-  CategoriaAccesorioRecord,
-  AccesorioRecord,
-  CategoriaCelularRecord,
-  CelularRecord,
+  AvatarRecord,
+  CarritoRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

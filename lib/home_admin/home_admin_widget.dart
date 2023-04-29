@@ -3,21 +3,24 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'home_model.dart';
-export 'home_model.dart';
+import 'package:text_search/text_search.dart';
+import 'home_admin_model.dart';
+export 'home_admin_model.dart';
 
-class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+class HomeAdminWidget extends StatefulWidget {
+  const HomeAdminWidget({Key? key}) : super(key: key);
 
   @override
-  _HomeWidgetState createState() => _HomeWidgetState();
+  _HomeAdminWidgetState createState() => _HomeAdminWidgetState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
-  late HomeModel _model;
+class _HomeAdminWidgetState extends State<HomeAdminWidget> {
+  late HomeAdminModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -25,7 +28,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HomeModel());
+    _model = createModel(context, () => HomeAdminModel());
 
     _model.busCateController ??= TextEditingController();
   }
@@ -88,7 +91,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.pushNamed('Home');
+                            context.pushNamed('HomeAdmin');
                           },
                           child: Image.network(
                             'https://extremetechcr.com/tienda/img/extremetechcr-logo-1464805590.jpg',
@@ -217,7 +220,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           await authManager.signOut();
                           GoRouter.of(context).clearRedirectLocation();
 
-                          context.pushNamedAuth('Login', mounted);
+                          context.goNamedAuth('Login', mounted);
                         },
                         child: ListTile(
                           leading: Icon(
@@ -326,6 +329,62 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FFButtonWidget(
+                      onPressed: () {
+                        print('Button pressed ...');
+                      },
+                      text: 'Insetar',
+                      options: FFButtonOptions(
+                        width: 100.0,
+                        height: 40.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white,
+                                ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    FFButtonWidget(
+                      onPressed: () {
+                        print('Button pressed ...');
+                      },
+                      text: 'Eliminar',
+                      options: FFButtonOptions(
+                        width: 100.0,
+                        height: 40.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white,
+                                ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                       child: Align(
@@ -366,6 +425,34 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       : null;
                               return TextFormField(
                                 controller: _model.busCateController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  '_model.busCateController',
+                                  Duration(milliseconds: 2000),
+                                  () async {
+                                    await queryCategoriaComponenteRecordOnce()
+                                        .then(
+                                          (records) => _model
+                                              .simpleSearchResults = TextSearch(
+                                            records
+                                                .map(
+                                                  (record) => TextSearchItem(
+                                                      record, [
+                                                    record.categoriaComponente!
+                                                  ]),
+                                                )
+                                                .toList(),
+                                          )
+                                              .search(
+                                                  busCateCategoriaComponenteRecord!
+                                                      .categoriaComponente!)
+                                              .map((r) => r.object)
+                                              .toList(),
+                                        )
+                                        .onError((_, __) =>
+                                            _model.simpleSearchResults = [])
+                                        .whenComplete(() => setState(() {}));
+                                  },
+                                ),
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(

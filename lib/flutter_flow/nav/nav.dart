@@ -105,9 +105,34 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ResetPasswordWidget(),
         ),
         FFRoute(
-          name: 'Carrito',
-          path: '/carrito',
-          builder: (context, params) => CarritoWidget(),
+          name: 'ActualizarDatosPerfil',
+          path: '/actualizarDatosPerfil',
+          builder: (context, params) => ActualizarDatosPerfilWidget(),
+        ),
+        FFRoute(
+          name: 'Productos',
+          path: '/productos',
+          asyncParams: {
+            'categoria': getDoc(
+                ['CategoriaComponente'], CategoriaComponenteRecord.serializer),
+          },
+          builder: (context, params) => ProductosWidget(
+            categoria: params.getParam('categoria', ParamType.Document),
+          ),
+        ),
+        FFRoute(
+          name: 'CarritoCopy',
+          path: '/carritoCopy',
+          builder: (context, params) => CarritoCopyWidget(
+            precio: params.getParam('precio', ParamType.String),
+            cantidad: params.getParam('cantidad', ParamType.String),
+            subtotal: params.getParam('subtotal', ParamType.int),
+          ),
+        ),
+        FFRoute(
+          name: 'HomeAdmin',
+          path: '/homeAdmin',
+          builder: (context, params) => HomeAdminWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,

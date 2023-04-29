@@ -1,8 +1,8 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'perfil_model.dart';
@@ -46,8 +46,20 @@ class _PerfilWidgetState extends State<PerfilWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           leading: InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             onTap: () async {
-              context.safePop();
+              context.pushNamed(
+                'Home',
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.topToBottom,
+                  ),
+                },
+              );
             },
             child: Icon(
               Icons.arrow_back_ios_outlined,
@@ -77,26 +89,37 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 0.0, 0.0),
-                      child: ClipRRect(
+                    AuthUserStreamWidget(
+                      builder: (context) => ClipRRect(
                         borderRadius: BorderRadius.circular(100.0),
-                        child: Image.network(
-                          'https://picsum.photos/seed/543/600',
+                        child: Image.asset(
+                          'assets/images/sin_foto.jpg',
                           width: 200.0,
                           height: 200.0,
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 180.0, 0.0, 0.0),
-                      child: FaIcon(
-                        FontAwesomeIcons.edit,
-                        color: Colors.black,
-                        size: 25.0,
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(30.0, 50.0, 30.0, 0.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Usuario: ',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    AuthUserStreamWidget(
+                      builder: (context) => Text(
+                        currentUserDisplayName,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                       ),
                     ),
                   ],
@@ -106,9 +129,17 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(30.0, 50.0, 30.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Nombre completo',
+                      'Correo: ',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Text(
+                      currentUserEmail,
                       style: FlutterFlowTheme.of(context).bodyMedium,
                     ),
                   ],
@@ -120,20 +151,17 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'Correo ',
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      'Teléfono: ',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(30.0, 50.0, 30.0, 0.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      'Telefono ',
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                    AuthUserStreamWidget(
+                      builder: (context) => Text(
+                        currentPhoneNumber,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                      ),
                     ),
                   ],
                 ),
@@ -145,8 +173,16 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FFButtonWidget(
-                      onPressed: () {
-                        print('Btn_actu_dato pressed ...');
+                      onPressed: () async {
+                        context.pushNamed(
+                          'ActualizarDatosPerfil',
+                          extra: <String, dynamic>{
+                            kTransitionInfoKey: TransitionInfo(
+                              hasTransition: true,
+                              transitionType: PageTransitionType.bottomToTop,
+                            ),
+                          },
+                        );
                       },
                       text: 'Actualizar Datos',
                       options: FFButtonOptions(
@@ -180,8 +216,16 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FFButtonWidget(
-                      onPressed: () {
-                        print('Btn_Reest_contra pressed ...');
+                      onPressed: () async {
+                        context.pushNamed(
+                          'ResetPassword',
+                          extra: <String, dynamic>{
+                            kTransitionInfoKey: TransitionInfo(
+                              hasTransition: true,
+                              transitionType: PageTransitionType.bottomToTop,
+                            ),
+                          },
+                        );
                       },
                       text: 'Reestablecer contraseña',
                       options: FFButtonOptions(

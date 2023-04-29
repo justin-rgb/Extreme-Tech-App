@@ -15,12 +15,17 @@ abstract class CategoriaComponenteRecord
   @BuiltValueField(wireName: 'CategoriaComponente')
   String? get categoriaComponente;
 
+  @BuiltValueField(wireName: 'IMGComponente')
+  String? get iMGComponente;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(CategoriaComponenteRecordBuilder builder) =>
-      builder..categoriaComponente = '';
+      builder
+        ..categoriaComponente = ''
+        ..iMGComponente = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('CategoriaComponente');
@@ -47,11 +52,14 @@ abstract class CategoriaComponenteRecord
 
 Map<String, dynamic> createCategoriaComponenteRecordData({
   String? categoriaComponente,
+  String? iMGComponente,
 }) {
   final firestoreData = serializers.toFirestore(
     CategoriaComponenteRecord.serializer,
     CategoriaComponenteRecord(
-      (c) => c..categoriaComponente = categoriaComponente,
+      (c) => c
+        ..categoriaComponente = categoriaComponente
+        ..iMGComponente = iMGComponente,
     ),
   );
 

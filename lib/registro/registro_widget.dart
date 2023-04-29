@@ -339,7 +339,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                   padding: MediaQuery.of(bottomSheetContext)
                                       .viewInsets,
                                   child: Container(
-                                    height: 250.0,
+                                    height: 278.0,
                                     child: AvisoRegistroWidget(),
                                   ),
                                 ),
